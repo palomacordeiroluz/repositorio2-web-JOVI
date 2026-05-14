@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jovi Class</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!--======================== TELA SPLASH ===============================-->
+<div id="tela-splash" class="tela ativa">
+
+    <div class="logo-container">
+        <div class="logo-icon">📚</div>
+        <h1>Jovi Class</h1>
+        <p>Sua plataforma de estudo</p>
+    </div>
+
+    <div class="botoes">
+        <button class="btn-roxo" onclick="navegarPara('tela-login')">Entrar</button>
+        <button class="btn-borda" onclick="navegarPara('tela-cadastro')">Criar Conta</button>
+    </div>
+
+</div>
+<!--======================== FIM TELA SPLASH ===============================-->
+
+
+<!--======================== TELA LOGIN ===============================-->
+<div id="tela-login" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-splash')">‹ Voltar</button>
+
+    <div class="form-container">
+        <h2>Bem-vindo(a)</h2>
+        <p>Acesse sua conta</p>
+        <input type="email" id="login-email" placeholder="seu@email.com"/>
+        <input type="password" id="login-senha" placeholder="Sua senha"/>
+        <button class="btn-roxo" onclick="fazerLogin()">Entrar</button>
+    </div>
+
+</div>
+<!--======================== FIM TELA LOGIN ===============================-->
+
+
+<!--======================== TELA CADASTRO ===============================-->
+<div id="tela-cadastro" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-splash')">‹ Voltar</button>
+
+    <div class="form-container">
+        <h2>Bem-vindo(a)</h2>
+        <p>Crie sua conta</p>
+        <input type="email" id="cadastro-email" placeholder="Cadastrar email"/>
+        <input type="password" id="cadastro-senha" placeholder="Cadastrar senha"/>
+        <button class="btn-roxo" onclick="fazerCadastro()">Cadastrar</button>
+    </div>
+
+</div>
+<!--======================== FIM TELA CADASTRO ===============================-->
+
+
+<!--======================== TELA HOME ===============================-->
+<div id="tela-home" class="tela">
+
+    <!-- cabeçalho -->
+    <div class="home-header">
+        <p class="home-saudacao">Olá, Estudante! 👋</p>
+        <p class="home-sub">O que vamos estudar hoje?</p>
+    </div>
+
+    <!-- slideshow -->
+    <div class="slideshow-container">
+
+        <div class="slide ativo">
+            <div class="slide-content slide-1">
+                <h3>📅 Organize sua agenda!</h3>
+                <p>Use o calendário para planejar seus estudos</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content slide-2">
+                <h3>📷 Scanner inteligente</h3>
+                <p>Digitalize suas fotos e documentos facilmente</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-content slide-3">
+                <h3>🤖 Aula Inteligente</h3>
+                <p>Resumos e flashcards com IA</p>
+            </div>
+        </div>
+
+        <div class="slide-dots">
+            <span class="dot ativo" onclick="irParaSlide(0)"></span>
+            <span class="dot" onclick="irParaSlide(1)"></span>
+            <span class="dot" onclick="irParaSlide(2)"></span>
+        </div>
+
+    </div>
+    <!-- fecha slideshow -->
+
+    <!-- menu de funções -->
+    <div class="menu-grid">
+
+        <button class="menu-item" onclick="navegarPara('tela-horario')">
+            <span class="menu-icon">🗓️</span>
+            <span>Horário de Aulas</span>
+        </button>
+
+        <button class="menu-item" onclick="navegarPara('tela-scanner')">
+            <span class="menu-icon">📷</span>
+            <span>Scanner</span>
+        </button>
+
+        <button class="menu-item" onclick="navegarPara('tela-calendario')">
+            <span class="menu-icon">📅</span>
+            <span>Calendário</span>
+        </button>
+
+        <button class="menu-item" onclick="navegarPara('tela-pasta')">
+            <span class="menu-icon">📁</span>
+            <span>Pastas</span>
+        </button>
+
+        <button class="menu-item" onclick="navegarPara('tela-aula')">
+            <span class="menu-icon">🤖</span>
+            <span>Aula Inteligente</span>
+        </button>
+
+        <button class="menu-item" onclick="navegarPara('tela-informacoes')">
+            <span class="menu-icon">ℹ️</span>
+            <span>Informações</span>
+        </button>
+
+    </div>
+    <!-- fecha menu-grid -->
+
+</div>
+<!--======================== FIM TELA HOME ===============================-->
+
+
+<!--======================== TELA INFORMAÇÕES ===============================-->
+<div id="tela-informacoes" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Como funciona cada função?</h2>
+
+    <div class="info-lista">
+
+        <div class="info-item">
+            <h3>🗓️ Horário de Aulas</h3>
+            <p>Organize e visualize seus horários de aula de forma simples.</p>
+        </div>
+
+        <div class="info-item">
+            <h3>📷 Scanner</h3>
+            <p>Digitalize documentos e materiais de estudo pelo celular.</p>
+        </div>
+
+        <div class="info-item">
+            <h3>📅 Calendário</h3>
+            <p>Marque provas, trabalhos e compromissos importantes.</p>
+        </div>
+
+        <div class="info-item">
+            <h3>📁 Pastas</h3>
+            <p>Salve e organize todos seus arquivos de estudo.</p>
+        </div>
+
+        <div class="info-item">
+            <h3>🤖 Aula Inteligente</h3>
+            <p>Crie resumos e flashcards a partir dos seus materiais.</p>
+        </div>
+
+    </div>
+    <!-- fecha info-lista -->
+
+</div>
+<!--======================== FIM TELA INFORMAÇÕES ===============================-->
+
+<!--======================== TELA HORÁRIO ===============================-->
+<div id="tela-horario" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Horário de Aulas</h2>
+    
+    <div class="info-lista" id="lista-aulas"></div>
+    <button class="btn-roxo" onclick="adicionarAula()">Adicionar Aula</button>
+<!--=================== FIM TELA HORÁRIO ==========================-->
+</div>
+
+<!--======================== TELA CALENDÁRIO ===============================-->
+<div id="tela-calendario" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Calendário</h2>
+
+    <!-- navegação entre meses -->
+    <div class="calendario-nav">
+        <button onclick="mesAnterior()">‹</button>
+        <span id="mes-ano">Mai 2026</span>
+        <button onclick="proximoMes()">›</button>
+    </div>
+
+    <!-- grade do calendário -->
+    <div class="calendario-grid" id="calendario-grid"></div>
+
+    <!-- botão para adicionar evento -->
+    <button class="btn-roxo" onclick="adicionarEvento()">+ Adicionar Evento</button>
+
+    <!-- lista de eventos -->
+    <div class="info-lista" id="lista-eventos"></div>
+<!--================ FIM TELA CALENDÁRIO =========================-->
+</div>
+
+
+<!--======================== TELA PASTAS ===============================-->
+<div id="tela-pasta" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Pastas</h2>
+
+    <!-- lista de pastas, o JS preenche -->
+    <div class="info-lista" id="lista-pastas"></div>
+
+    <!-- botão para criar nova pasta -->
+    <button class="btn-roxo" onclick="criarPasta()">+ Criar Pasta</button>
+<!--======================== FIM TELA PASTAS ===============================-->
+</div>
+
+<!--======================== TELA SCANNER ===============================-->
+<div id="tela-scanner" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Scanner</h2>
+
+    <!-- área de preview da imagem -->
+    <div class="scanner-box" id="scanner-preview">
+        <div class="scanner-icon">📷</div>
+        <p>Nenhuma imagem selecionada</p>
+    </div>
+
+    <!-- input de arquivo escondido -->
+    <!-- quando clicado, abre o explorador de arquivos -->
+    <input type="file" id="scanner-input" accept="image/*" 
+           style="display:none" onchange="previewImagem(event)"/>
+
+    <!-- botões do scanner -->
+    <div class="botoes">
+        <button class="btn-roxo" onclick="document.getElementById('scanner-input').click()">
+            📷 Selecionar Imagem
+        </button>
+        <button class="btn-borda" onclick="salvarImagem()">
+            💾 Salvar
+        </button>
+    </div>
+<!--======================== FIM TELA SCANNER ===============================-->
+</div>
+
+<!--======================== TELA AULA INTELIGENTE ===============================-->
+<div id="tela-aula" class="tela">
+
+    <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+
+    <h2 class="tela-titulo">Aula Inteligente</h2>
+
+    <!-- área de preview da imagem -->
+    <div class="scanner-box" id="aula-preview">
+        <div class="scanner-icon">📷</div>
+        <p>Nenhuma imagem selecionada</p>
+    </div>
+
+    <!-- input de arquivo escondido -->
+    <input type="file" id="aula-input" accept="image/*"
+           style="display:none" onchange="previewAula(event)"/>
+
+    <!-- opções da aula inteligente -->
+    <div class="menu-grid">
+
+        <button class="menu-item" onclick="document.getElementById('aula-input').click()">
+            <span class="menu-icon">📷</span>
+            <span>Tirar Foto</span>
+        </button>
+
+        <button class="menu-item" onclick="fazerSlides()">
+            <span class="menu-icon">🖼️</span>
+            <span>Fazer Slides</span>
+        </button>
+
+        <button class="menu-item" onclick="salvarGaleria()">
+            <span class="menu-icon">💾</span>
+            <span>Salvar na Galeria</span>
+        </button>
+
+        <button class="menu-item" onclick="adicionarEvento()">
+            <span class="menu-icon">📅</span>
+            <span>Adicionar ao Calendário</span>
+        </button>
+
+        <button class="menu-item" onclick="criarResumo()">
+            <span class="menu-icon">📝</span>
+            <span>Criar Resumo</span>
+        </button>
+
+        <button class="menu-item" onclick="criarFlashcards()">
+            <span class="menu-icon">🃏</span>
+            <span>Criar Flashcards</span>
+        </button>
+
+    </div>
+<!--======================== FIM TELA AULA INTELIGENTE ===============================-->
+</div>
+
+
+
+
+
+<script src="js/main.js"></script>
+
+</body>
+</html>
+    
