@@ -65,8 +65,11 @@
 
     <!-- cabeçalho -->
     <div class="home-header">
-        <p class="home-saudacao">Olá, Estudante! 👋</p>
-        <p class="home-sub">O que vamos estudar hoje?</p>
+        <div>
+            <p class="home-saudacao">Olá, Visitante! 👋</p>
+            <p class="home-sub">O que vamos estudar hoje?</p>
+        </div>
+        <div class="avatar" onclick="navegarPara('tela-perfil')">👤</div>
     </div>
 
     <!-- slideshow -->
@@ -82,7 +85,7 @@
         <div class="slide">
             <div class="slide-content slide-2">
                 <h3>📷 Scanner inteligente</h3>
-                <p>Digitalize suas fotos e documentos facilmente</p>
+                <p>Digitalize seus materiais facilmente</p>
             </div>
         </div>
 
@@ -138,6 +141,14 @@
     </div>
     <!-- fecha menu-grid -->
 
+    <!-- NAVBAR INFERIOR -->
+    <nav class="bottom-nav">
+        <button onclick="navegarPara('tela-home')">🏠</button>
+        <button onclick="navegarPara('tela-horario')">🗓️</button>
+        <button onclick="navegarPara('tela-pasta')">📁</button>
+        <button onclick="navegarPara('tela-perfil')">👤</button>
+    </nav>
+
 </div>
 <!--======================== FIM TELA HOME ===============================-->
 
@@ -182,17 +193,102 @@
 </div>
 <!--======================== FIM TELA INFORMAÇÕES ===============================-->
 
+
+<!--======================== TELA PERFIL ===============================-->
+<div id="tela-perfil" class="tela">
+
+    <div class="tela-header">
+        <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
+        <h2>Perfil</h2>
+    </div>
+
+    <div class="content-area center">
+        <div class="perfil-avatar">👤</div>
+        <p class="perfil-nome" id="perfil-nome">Estudante</p>
+        <p class="perfil-email" id="perfil-email">email@exemplo.com</p>
+        <div class="perfil-opcoes">
+            <button class="btn-opcao-perfil" onclick="editarPerfil()">✏️ Editar Perfil</button>
+            <button class="btn-opcao-perfil" onclick="navegarPara('tela-config')">⚙️ Configurações</button>
+            <button class="btn-opcao-perfil danger" onclick="fazerLogout()">🚪 Sair</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="navegarPara('tela-home')">🏠</button>
+        <button onclick="navegarPara('tela-horario')">🗓️</button>
+        <button onclick="navegarPara('tela-pasta')">📁</button>
+        <button class="ativo" onclick="navegarPara('tela-perfil')">👤</button>
+    </nav>
+
+</div>
+<!--======================== FIM TELA PERFIL ===============================-->
+
+
+<!--======================== TELA CONFIGURAÇÕES ===============================-->
+<div id="tela-config" class="tela">
+
+    <div class="tela-header">
+        <button class="btn-voltar" onclick="navegarPara('tela-perfil')">‹ Voltar</button>
+        <h2>Configurações</h2>
+    </div>
+
+    <div class="content-area">
+        <div class="config-item">
+            <span>🔔 Notificações</span>
+            <label class="toggle">
+                <input type="checkbox" id="toggle-notif" checked onchange="toggleNotificacoes()"/>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="config-item">
+            <span>🌙 Modo Escuro</span>
+            <label class="toggle">
+                <input type="checkbox" id="toggle-dark" onchange="toggleDark()"/>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="config-item">
+            <span>🔒 Privacidade de dados</span>
+            <button class="btn-link" onclick="verPrivacidade()">Ver</button>
+        </div>
+        <div class="config-item">
+            <span>🔑 Redefinir senha</span>
+            <button class="btn-link" onclick="redefinirSenha()">Alterar</button>
+        </div>
+        <div class="config-item">
+            <span>📋 Termos de uso</span>
+            <button class="btn-link" onclick="verTermos()">Ver</button>
+        </div>
+        <div class="config-item">
+            <span>🛡️ Declaração de privacidade</span>
+            <button class="btn-link" onclick="verDeclaracao()">Ver</button>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button onclick="navegarPara('tela-home')">🏠</button>
+        <button onclick="navegarPara('tela-horario')">🗓️</button>
+        <button onclick="navegarPara('tela-pasta')">📁</button>
+        <button onclick="navegarPara('tela-perfil')">👤</button>
+    </nav>
+
+</div>
+<!--======================== FIM TELA CONFIGURAÇÕES ===============================-->
+
+
 <!--======================== TELA HORÁRIO ===============================-->
 <div id="tela-horario" class="tela">
 
     <button class="btn-voltar" onclick="navegarPara('tela-home')">‹ Voltar</button>
 
     <h2 class="tela-titulo">Horário de Aulas</h2>
-    
+
     <div class="info-lista" id="lista-aulas"></div>
     <button class="btn-roxo" onclick="adicionarAula()">Adicionar Aula</button>
-<!--=================== FIM TELA HORÁRIO ==========================-->
+
 </div>
+<!--======================== FIM TELA HORÁRIO ===============================-->
+
 
 <!--======================== TELA CALENDÁRIO ===============================-->
 <div id="tela-calendario" class="tela">
@@ -201,23 +297,20 @@
 
     <h2 class="tela-titulo">Calendário</h2>
 
-    <!-- navegação entre meses -->
     <div class="calendario-nav">
         <button onclick="mesAnterior()">‹</button>
         <span id="mes-ano">Mai 2026</span>
         <button onclick="proximoMes()">›</button>
     </div>
 
-    <!-- grade do calendário -->
     <div class="calendario-grid" id="calendario-grid"></div>
 
-    <!-- botão para adicionar evento -->
     <button class="btn-roxo" onclick="adicionarEvento()">+ Adicionar Evento</button>
 
-    <!-- lista de eventos -->
     <div class="info-lista" id="lista-eventos"></div>
-<!--================ FIM TELA CALENDÁRIO =========================-->
+
 </div>
+<!--======================== FIM TELA CALENDÁRIO ===============================-->
 
 
 <!--======================== TELA PASTAS ===============================-->
@@ -227,13 +320,13 @@
 
     <h2 class="tela-titulo">Pastas</h2>
 
-    <!-- lista de pastas, o JS preenche -->
     <div class="info-lista" id="lista-pastas"></div>
 
-    <!-- botão para criar nova pasta -->
     <button class="btn-roxo" onclick="criarPasta()">+ Criar Pasta</button>
-<!--======================== FIM TELA PASTAS ===============================-->
+
 </div>
+<!--======================== FIM TELA PASTAS ===============================-->
+
 
 <!--======================== TELA SCANNER ===============================-->
 <div id="tela-scanner" class="tela">
@@ -242,18 +335,14 @@
 
     <h2 class="tela-titulo">Scanner</h2>
 
-    <!-- área de preview da imagem -->
     <div class="scanner-box" id="scanner-preview">
         <div class="scanner-icon">📷</div>
         <p>Nenhuma imagem selecionada</p>
     </div>
 
-    <!-- input de arquivo escondido -->
-    <!-- quando clicado, abre o explorador de arquivos -->
-    <input type="file" id="scanner-input" accept="image/*" 
+    <input type="file" id="scanner-input" accept="image/*"
            style="display:none" onchange="previewImagem(event)"/>
 
-    <!-- botões do scanner -->
     <div class="botoes">
         <button class="btn-roxo" onclick="document.getElementById('scanner-input').click()">
             📷 Selecionar Imagem
@@ -262,8 +351,10 @@
             💾 Salvar
         </button>
     </div>
-<!--======================== FIM TELA SCANNER ===============================-->
+
 </div>
+<!--======================== FIM TELA SCANNER ===============================-->
+
 
 <!--======================== TELA AULA INTELIGENTE ===============================-->
 <div id="tela-aula" class="tela">
@@ -272,17 +363,14 @@
 
     <h2 class="tela-titulo">Aula Inteligente</h2>
 
-    <!-- área de preview da imagem -->
     <div class="scanner-box" id="aula-preview">
         <div class="scanner-icon">📷</div>
         <p>Nenhuma imagem selecionada</p>
     </div>
 
-    <!-- input de arquivo escondido -->
     <input type="file" id="aula-input" accept="image/*"
            style="display:none" onchange="previewAula(event)"/>
 
-    <!-- opções da aula inteligente -->
     <div class="menu-grid">
 
         <button class="menu-item" onclick="document.getElementById('aula-input').click()">
@@ -316,15 +404,10 @@
         </button>
 
     </div>
-<!--======================== FIM TELA AULA INTELIGENTE ===============================-->
+
 </div>
-
-
-
-
-
+<!--======================== FIM TELA AULA INTELIGENTE ===============================-->
 <script src="js/main.js"></script>
 
 </body>
 </html>
-    
