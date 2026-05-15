@@ -1,57 +1,88 @@
-function navegarPara(telaId) {   //funcao para trocar de tela e mostrar a tela selecionada
-    document.querySelectorAll('.tela').forEach(function(tela) {  
-        tela.classList.remove('ativa'); //removera a classe 'ativa' de cada tela, encondendo-as
-
-        if (telaId === 'tela-horario') {  //se a tela selecionada for a tela home, mostra o menu lateral
-            mostrarAulas(); //chama a funcao para mostrar as aulas cadastradas
-        
-        if (telaId === 'tela-calendario') {
-        renderizarCalendario();
-    }
-        
-}
+// ===== NAVEGAÇÃO =====
+function navegarPara(telaId) {
+    document.querySelectorAll('.tela').forEach(function(tela) {
+        tela.classList.remove('ativa');
     });
 
-    document.getElementById(telaId).classList.add('ativa'); //pega so a tela com o ID para mostrar
+    document.getElementById(telaId).classList.add('ativa');
+
+    if (telaId === 'tela-horario') {
+        mostrarAulas();
+    }
+    if (telaId === 'tela-calendario') {
+        renderizarCalendario();
+    }
+    if (telaId === 'tela-pasta') {
+        mostrarPastas();
+    }
 }
 
-function fazerLogin() {  //funcao para fazer login
-    var email = document.getElementById('login-email').value;  //pega o valor do campo de email
-    var senha = document.getElementById('login-senha').value;  //pega o valor do campo de senha
+// ===== SLIDESHOW =====
+var slideAtual = 0; // controla qual slide está aparecendo
+
+function irParaSlide(index) {
+    // esconde todos os slides
+    document.querySelectorAll('.slide').forEach(function(slide) {
+        slide.classList.remove('ativo');
+    });
+    // esconde todas as bolinhas
+    document.querySelectorAll('.dot').forEach(function(dot) {
+        dot.classList.remove('ativo');
+    });
+    // mostra só o slide escolhido
+    document.querySelectorAll('.slide')[index].classList.add('ativo');
+    // marca a bolinha correspondente
+    document.querySelectorAll('.dot')[index].classList.add('ativo');
+    // atualiza o slide atual
+    slideAtual = index;
+}
+
+// troca o slide automaticamente a cada 3 segundos
+setInterval(function() {
+    var proximoSlide = (slideAtual + 1) % 3;
+    // % 3 faz voltar para 0 quando chega no slide 3
+    irParaSlide(proximoSlide);
+}, 3000);
+
+// ===== LOGIN =====
+function fazerLogin() {
+    var email = document.getElementById('login-email').value;
+    var senha = document.getElementById('login-senha').value;
 
     if (email === '') {
         alert('Por favor, insira seu email.');
         return;
     }
-
     if (!email.includes('@')) {
         alert('Por favor, insira um email válido.');
         return;
     }
-
     if (senha === '') {
         alert('Por favor, insira sua senha.');
         return;
     }
 
-    alert('Login bem-sucedido!'); 
+    // Salva email para exibir no perfil
+    document.getElementById('perfil-email').textContent = email;
+    document.getElementById('perfil-nome').textContent = 'Estudante';
+
+    alert('Login bem-sucedido!');
     navegarPara('tela-home');
 }
 
-function fazerCadastro() {  
-    var email = document.getElementById('cadastro-email').value; 
+// ===== CADASTRO =====
+function fazerCadastro() {
+    var email = document.getElementById('cadastro-email').value;
     var senha = document.getElementById('cadastro-senha').value;
 
-    if(email === '') {
+    if (email === '') {
         alert('Por favor, insira seu email.');
         return;
     }
-
     if (!email.includes('@')) {
         alert('Por favor, insira um email válido.');
         return;
     }
-
     if (senha === '') {
         alert('Por favor, insira sua senha.');
         return;
@@ -61,54 +92,49 @@ function fazerCadastro() {
     navegarPara('tela-login');
 }
 
-// lista com algumas aulas ja cadastradas
+// ===== AULAS =====
 var aulas = [
-    { id: 1, nome: 'Matemática', dia:'Segunda-feira', horario: 'Segunda-feira, 10h' },
-    { id: 2, nome: 'Português', dia:'Terça-feira', horario: 'Terça-feira, 14h' },
-    { id: 3, nome: 'História', dia:'Quarta-feira', horario: 'Quarta-feira, 9h' }
+    { materia: 'Matemática', dia: 'Segunda-feira', horario: '10h' },
+    { materia: 'Português', dia: 'Terça-feira', horario: '14h' },
+    { materia: 'História', dia: 'Quarta-feira', horario: '9h' }
 ];
 
-
-function mostrarAulas() { // função para mostrar as aulas cadastradas
+function mostrarAulas() {
     var lista = document.getElementById('lista-aulas');
-    lista.innerHTML = ''; // limpa a lista antes de desenhar
+    lista.innerHTML = '';
 
-    aulas.forEach(function(aula) { // para cada aula, cria um card
-        var card = document.createElement('div'); // cria uma div nova
-        card.className = 'info-item'; // define o estilo do card
+    aulas.forEach(function(aula) {
+        var card = document.createElement('div');
+        card.className = 'info-item';
         card.innerHTML = '<h3>' + aula.materia + '</h3>' +
                          '<p>' + aula.dia + ' • ' + aula.horario + '</p>';
-        lista.appendChild(card); // adiciona o card na lista
+        lista.appendChild(card);
     });
 }
 
-function adicionarAula() {  //funcao para adicionar uma nova aula
-    var materia = prompt('nome da matéria:');
+function adicionarAula() {
+    var materia = prompt('Nome da matéria:');
     if (!materia) return;
 
-    var dia = prompt('dia da semana:');
+    var dia = prompt('Dia da semana:');
     if (!dia) return;
 
     var horario = prompt('Horário (ex: 08:00 - 09:40):', '08:00 - 09:40');
     if (!horario) return;
 
-    // adiciona a nova aula na lista
     aulas.push({ materia: materia, dia: dia, horario: horario });
-
-    // atualiza a tela
     mostrarAulas();
-
     alert('✅ Aula adicionada com sucesso!');
 }
 
-var dataAtual = new Date(); //pega a data atual
+// ===== CALENDÁRIO =====
+var dataAtual = new Date();
 var eventos = [];
 
 function renderizarCalendario() {
     var grid = document.getElementById('calendario-grid');
     var mesAnoEl = document.getElementById('mes-ano');
 
-    // nomes dos dias e meses
     var diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
     var meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
@@ -116,13 +142,13 @@ function renderizarCalendario() {
     var mes = dataAtual.getMonth();
 
     mesAnoEl.textContent = meses[mes] + ' ' + ano;
+
     var primeiroDia = new Date(ano, mes, 1).getDay();
     var diasNoMes = new Date(ano, mes + 1, 0).getDate();
     var hoje = new Date();
 
     grid.innerHTML = '';
 
-    // cabeçalhos dos dias da semana
     diasSemana.forEach(function(dia) {
         var el = document.createElement('div');
         el.className = 'cal-header';
@@ -153,7 +179,7 @@ function renderizarCalendario() {
         grid.appendChild(el);
     }
 
-     mostrarEventos();
+    mostrarEventos();
 }
 
 function mostrarEventos() {
@@ -165,7 +191,7 @@ function mostrarEventos() {
         return;
     }
 
-     eventos.forEach(function(ev) {
+    eventos.forEach(function(ev) {
         var card = document.createElement('div');
         card.className = 'info-item';
         card.innerHTML = '<h3>' + ev.titulo + '</h3>' +
@@ -174,7 +200,6 @@ function mostrarEventos() {
     });
 }
 
-// função para adicionar evento
 function adicionarEvento() {
     var titulo = prompt('Nome do evento:');
     if (!titulo) return;
@@ -187,31 +212,26 @@ function adicionarEvento() {
     alert('✅ Evento adicionado!');
 }
 
-// função para ir ao mês anterior
 function mesAnterior() {
     dataAtual.setMonth(dataAtual.getMonth() - 1);
-    // diminui 1 mês
     renderizarCalendario();
 }
 
-// função para ir ao próximo mês
 function proximoMes() {
     dataAtual.setMonth(dataAtual.getMonth() + 1);
-    // aumenta 1 mês
     renderizarCalendario();
 }
 
-// lista de pastas começa com algumas já cadastradas
+// ===== PASTAS =====
 var pastas = [
     { nome: 'Matemática', arquivos: 3 },
     { nome: 'Português', arquivos: 5 },
     { nome: 'História', arquivos: 2 },
 ];
 
-// função que mostra as pastas na tela
 function mostrarPastas() {
     var lista = document.getElementById('lista-pastas');
-    lista.innerHTML = ''; // limpa antes de desenhar
+    lista.innerHTML = '';
 
     pastas.forEach(function(pasta) {
         var card = document.createElement('div');
@@ -219,7 +239,6 @@ function mostrarPastas() {
         card.innerHTML = '<h3>📁 ' + pasta.nome + '</h3>' +
                          '<p>' + pasta.arquivos + ' arquivo(s)</p>';
 
-        // ao clicar na pasta abre um alert
         card.addEventListener('click', function() {
             alert('📁 Abrindo pasta: ' + pasta.nome);
         });
@@ -228,94 +247,50 @@ function mostrarPastas() {
     });
 }
 
-// função para criar nova pasta
 function criarPasta() {
     var nome = prompt('Nome da nova pasta:');
     if (!nome) return;
 
-    // adiciona a nova pasta na lista
     pastas.push({ nome: nome, arquivos: 0 });
-
-    // atualiza a tela
     mostrarPastas();
-
     alert('✅ Pasta "' + nome + '" criada!');
 }
 
-function navegarPara(telaId) {
-
-    document.querySelectorAll('.tela').forEach(function(tela) {
-        tela.classList.remove('ativa');
-    });
-
-    document.getElementById(telaId).classList.add('ativa');
-
-    if (telaId === 'tela-horario') {
-        mostrarAulas();
-    }
-
-    if (telaId === 'tela-calendario') {
-        renderizarCalendario();
-    }
-
-    // adicionado agora
-    if (telaId === 'tela-pasta') {
-        mostrarPastas();
-    }
-}
-
-// função que mostra a prévia da imagem
+// ===== SCANNER =====
 function previewImagem(event) {
-
-    // pega o arquivo selecionado
     var file = event.target.files[0];
     if (!file) return;
-    // se não selecionou nada, para aqui
 
-    // FileReader lê o arquivo e converte para URL
     var reader = new FileReader();
-
-    // quando terminar de ler, mostra a imagem
     reader.onload = function(e) {
         var preview = document.getElementById('scanner-preview');
-        // substitui o conteúdo da caixa pela imagem
         preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview"/>';
     };
-
-    // começa a ler o arquivo
     reader.readAsDataURL(file);
 }
 
-// função para salvar a imagem
 function salvarImagem() {
     var preview = document.getElementById('scanner-preview');
-
-    // verifica se tem uma imagem no preview
     if (!preview.querySelector('img')) {
         alert('⚠️ Selecione uma imagem primeiro!');
         return;
     }
-
     alert('✅ Imagem salva com sucesso!');
 }
 
-// função que mostra preview na aula inteligente
+// ===== AULA INTELIGENTE =====
 function previewAula(event) {
-
     var file = event.target.files[0];
     if (!file) return;
 
     var reader = new FileReader();
-
     reader.onload = function(e) {
         var preview = document.getElementById('aula-preview');
         preview.innerHTML = '<img src="' + e.target.result + '" alt="Preview"/>';
     };
-
     reader.readAsDataURL(file);
 }
 
-// cada botão da aula inteligente mostra um alert
 function fazerSlides() {
     alert('🖼️ Slides gerados com sucesso!');
 }
@@ -326,9 +301,61 @@ function salvarGaleria() {
 
 function criarResumo() {
     alert('📝 Resumo criado!\n\nSeus principais pontos foram organizados.');
-    // \n pula uma linha dentro do alert
 }
 
 function criarFlashcards() {
     alert('🃏 Flashcards criados!\n\n3 flashcards gerados do seu material.');
+}
+
+// ===== PERFIL =====
+function editarPerfil() {
+    // CORRIGIDO: removido 'nome-usuario' e 'usuarioLogado' que não existem no HTML
+    var novoNome = prompt('Seu nome:', document.getElementById('perfil-nome').textContent);
+    if (novoNome) {
+        document.getElementById('perfil-nome').textContent = novoNome;
+        alert('✅ Perfil atualizado!');
+    }
+}
+
+// ===== CONFIGURAÇÕES =====
+function toggleNotificacoes() {
+  const ativo = document.getElementById('toggle-notif').checked;
+  alert(ativo ? '🔔 Notificações ativadas!' : '🔕 Notificações desativadas.');
+}
+
+function toggleDark() {
+  const dark = document.getElementById('toggle-dark').checked;
+  document.documentElement.style.setProperty('--fundo', dark ? '#1a1a1a' : '#8b619c');
+  document.documentElement.style.setProperty('--card', dark ? '#111' : '#2A2A2A');
+}
+
+function redefinirSenha() {
+  const email = prompt('Digite seu email para redefinir a senha:');
+  if (email && email.includes('@')) {
+    alert('✅ Email de redefinição de senha enviado para ' + email);
+  } else if (email) {
+    alert('❌ Email inválido.');
+  }
+}
+
+function verPrivacidade() {
+  alert('🔒 Política de Privacidade\n\nSeus dados são armazenados localmente no dispositivo e não são compartilhados com terceiros.');
+}
+
+function verTermos() {
+  alert('📋 Termos de Uso\n\nAo usar o JoviClass você concorda com o uso responsável da plataforma para fins educacionais.');
+}
+
+function verDeclaracao() {
+  alert('🛡️ Declaração de Privacidade\n\nO JoviClass respeita sua privacidade e segue as diretrizes da LGPD.');
+}
+
+// ===== LOGOUT =====
+function fazerLogout() {
+    // CORRIGIDO: removido 'usuarioLogado' que não existia
+    const confirmar = confirm('Tem certeza que deseja sair?');
+    if (confirmar) {
+        alert('Até logo! 👋');
+        navegarPara('tela-splash');
+    }
 }
